@@ -24,7 +24,7 @@ def reset(screen):
         height = random.randint(10, 100)
         bars.insert(len(bars), height)
         x = hor_offset + (i*bar_width) + (i*space)
-        drawBar(screen, x, height)
+        drawBar(screen, x, height, BLACK)
 
 def bubbleSort(screen, bars):
     """
@@ -40,7 +40,10 @@ def bubbleSort(screen, bars):
                 #loop for drawing bars
                 for k in range(num_bars):
                     x = hor_offset + (k*bar_width) + (k*space)
-                    drawBar(screen, x, bars[k])
+                    if k==(j) or (k==(j+1)):
+                        drawBar(screen, x, bars[k], BLUE)
+                    else:
+                        drawBar(screen, x, bars[k], BLACK)
                 pygame.display.update()
                 time.sleep(.2)
                 #handle events
@@ -49,10 +52,12 @@ def bubbleSort(screen, bars):
                         pygame.quit()
                         sys.exit()
                         sorting = False
+    #sorting done , pick a new list
+    time.sleep(.4)
     reset(screen)
 
-def drawBar(screen, x, height):
-    pygame.draw.rect(screen, BLACK, (x, 400-height, bar_width, height), 0)
+def drawBar(screen, x, height, color):
+    pygame.draw.rect(screen, color, (x, 400-height, bar_width, height), 0)
 
 def main():
     pygame.init()
