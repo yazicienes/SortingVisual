@@ -8,9 +8,9 @@ WIDTH = 800
 HEIGHT = 600
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-BLUE =  (0, 0, 255)
+BLUE =  (66, 135, 245)
 
-num_bars = 10
+num_bars = 15
 bar_width = 20
 space = 5
 hor_offset = WIDTH/4
@@ -26,34 +26,43 @@ def reset(screen):
         x = hor_offset + (i*bar_width) + (i*space)
         drawBar(screen, x, height, BLACK)
 
+def draw_bars(screen, j):
+    #clear screen
+    screen.fill(WHITE)
+    #loop for drawing each bar
+    for k in range(num_bars):
+        x = hor_offset + (k*bar_width) + (k*space)
+        if k==(j) or (k==(j+1)):
+            drawBar(screen, x, bars[k], BLUE)
+        else:
+            drawBar(screen, x, bars[k], BLACK)
+
+def handle_events():
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+            sorting = False
+
 def bubbleSort(screen, bars):
     """
     sort and draw
     """
     n = len(bars)
-    #sorting
+    #bubble sorting algorithm, picking the maximum each time 
     for i in range(n-1):
         for j in range(0, n-1-i):
             if bars[j] > bars[j+1]:
                 bars[j], bars[j+1] = bars[j+1], bars[j]
-                screen.fill(WHITE)
-                #loop for drawing bars
-                for k in range(num_bars):
-                    x = hor_offset + (k*bar_width) + (k*space)
-                    if k==(j) or (k==(j+1)):
-                        drawBar(screen, x, bars[k], BLUE)
-                    else:
-                        drawBar(screen, x, bars[k], BLACK)
+                draw_bars(screen, j)
+
                 pygame.display.update()
                 time.sleep(.2)
-                #handle events
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
-                        sys.exit()
-                        sorting = False
-    #sorting done , pick a new list
-    time.sleep(.4)
+
+                handle_events()
+                
+    #sorting done , generate a new random list
+    time.sleep(.6)
     reset(screen)
 
 def drawBar(screen, x, height, color):
