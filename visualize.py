@@ -84,7 +84,7 @@ def bubbleSort(screen):
     #sorting done , generate a new random list
     time.sleep(.6)
     reset(screen)
-    bubbleSort(screen)
+    #bubbleSort(screen)
 
 def insertionSort(arr):
     pass
@@ -105,15 +105,39 @@ def selectionSort(screen):
                     else:
                         drawBar(screen, x, bars[k], BLACK)
                 pygame.display.update()
-                time.sleep(.2)
+                time.sleep(.6)
 
                 handle_events(screen)
+    #sorting done
+    time.sleep(.6)
+    reset(screen)
 
 def quickSort(screen):
     pass
 
-def mergeSort(screen):
-    pass
+def mergeSort(screen,left, right, arr):
+    n_left = len(left)
+    n_right = len(right)
+    n_arr = len(arr)
+    if n_arr<2:
+        return arr
+    i=0
+    j=0
+    k=0
+    while (i<n_left and n_right<n_right):
+        if left[i]<right[j]:
+            arr[k] = left[i]
+            i+=1
+        else:
+            arr[k] = right[j]
+            j+=1
+        k+=1
+    mid = n_arr // 2
+    for i in range(0,mid):
+        left[i] = arr[i]
+    for i in range(mid+1, n_arr):
+        right[i] = arr[i]
+    return mergeSort(screen,left,right,arr)
 
 def main():
     pygame.init()
